@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>node index</title>
+	<link rel="stylesheet" href="">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<form action="/user" method="post">
+		<input type="input" name="name" placeholder="이름을 입력해주세요." />
+		<input type="input" name="age" placeholder="나이를 입력해주세요." />
+		<button id="sendBtn" type="submit"><span>보내기</span></button>
+	</form>
+	<div class="datas">
+		<span class="name"></span>
+		<span class="job"></span>
+	</div>
+	<script>
+		const getData = e => {
+			e.preventDefault();
+			
+			var home = '/user',
+				data = {
+					name : $('input[name="name"]').val(),
+					age : $('input[name="age"]').val()
+				}
+			$.ajax({
+				url : home,
+				method : 'post',
+				data : data
+			}).done(rs => {
+				if (!rs.resultData) return;
+				$('.name').html(rs.resultData[0].id);
+				$('.job').html(rs.resultData[0].job);
+			});
+		}
+
+		$('#sendBtn').click(getData);
+		
+	</script>
+</body>
+</html>

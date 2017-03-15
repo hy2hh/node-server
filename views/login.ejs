@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>node index</title>
+	<link rel="stylesheet" href="">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<form action="/join" method="post">
+		<input type="input" name="email" placeholder="email을 입력해주세요." />
+		<input type="input" name="password" placeholder="password를 입력해주세요." />
+		<button id="sendBtn" type="submit"><span>보내기</span></button>
+	</form>
+	<div class="datas">
+		<span class="email"></span>
+		<span class="password"></span>
+	</div>
+	<script>
+		const getData = e => {
+			e.preventDefault();
+			
+			var home = '/login',
+				data = {
+					email : $('input[name="email"]').val(),
+					password : $('input[name="password"]').val()
+				};
+			
+			$.ajax({
+				url : home,
+				method : 'post',
+				data : data
+			}).done(rs => {
+				if (!rs.resultData) return;
+				$('.email').html(rs.resultData[0].id);
+				$('.password').html(rs.resultData[0].job);
+			});
+		}
+
+		$('#sendBtn').click(getData);
+		
+	</script>
+</body>
+</html>
